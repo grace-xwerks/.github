@@ -8,7 +8,7 @@ This org houses three threads of work: the production tooling that operates the 
 
 ## 🏭 Production manufacturing
 
-Software that runs the shop today.
+Software that runs the shop.
 
 **[grace-cam](https://github.com/grace-xwerks/grace-cam)** — The shop floor's source of truth. Parts library organized by `{turning,milling,swiss}/{machine}/{customer}/{part}/`, Fusion post processors per machine, Grace-standard subprograms, and validators that catch crashes before they hit the spindle.
 
