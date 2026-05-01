@@ -2,7 +2,7 @@
 
 Precision CNC manufacturing — and the software that runs it, plus the experiments betting on what comes next.
 
-This org houses three threads of work: the production tooling that operates the shop fleet today, the R&D track reimagining CAM around AI-generated node graphs, and customer-facing products built on Grace's hardware-software fluency.
+This org houses three threads of work: the production tooling that operates the shop fleet in the near future, the R&D track reimagining CAM around AI-generated node graphs, and customer-facing products built on Grace's hardware-software fluency.
 
 ---
 
