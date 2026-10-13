@@ -91,10 +91,13 @@ upstream.
 | [stratum](https://github.com/grace-xwerks/stratum) | Target-side aim-tracking instrument for archery, built for Prime Archery. Laser on the bow, a Nicla Vision sensor at the target face reporting centroid plus IMU over BLE, a React Native app drawing the point cloud with grouping stats and CSV export. Gen 1 is three iPad field-demo units running two laser-aim games; Android is not a Gen 1 target. | Gen 1 build · 2026-08 |
 | [pointCloudThing](https://github.com/grace-xwerks/pointCloudThing) | Stratum's predecessor, from when the scope still included rifle work. Its design space moved into stratum's `docs/vision/`. | archived |
 
-### R&D, parked
+### Forward R&D
 
-A separate bet, not the shop's CAM. The shop programs in PartMaker/SwissCAM and
-Fusion; these two explore what comes after.
+The bet on what CNC programming looks like next: a node-graph dataflow with
+structured JSON as the AI bridge, and everything downstream of it, G-code,
+quoting, scheduling, a different consumer of the same validated job JSON. Both
+repos hit their milestones in spring 2026 and have been quiet since while the
+shop-floor work above took priority.
 
 | Repo | What it is | Status |
 |---|---|---|
@@ -149,8 +152,8 @@ grace-cam's README from the top, and tapeworm's after that.
 Most shops buy software. Grace writes it where the market option doesn't fit
 the work or where the workflow itself is the edge, and every repo above is paid
 for in shop-floor leverage: faster setups, fewer crashes, less duplication
-between CAM and ERP. The longer bet, parked for now in the TLK pair, is that the
-right primitive for AI in manufacturing is validated structured JSON rather than
+between CAM and ERP. The longer bet, carried by the TLK pair, is that the right
+primitive for AI in manufacturing is validated structured JSON rather than
 natural language straight to G-code.
 
 [graceengineering.com](https://graceengineering.com)
