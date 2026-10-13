@@ -11,32 +11,30 @@ tool without opening it.
 
 ## How it fits together
 
-```
- CAM                        program library + transfer                 iron
- ───                        ──────────────────────────                 ────
- Fusion ────┐               ┌──────────────────────────┐    ┌───────────────┐
- PartMaker ─┼─► grace-cam ─►│ tapeworm                 │───►│ RS-232 · net  │──► Tsugami M08SY mill-turn
- SwissCAM ──┘   posts       │ versioned programs       │    │ share · USB   │    Citizen L20 / K16 Swiss
-                recipes     │ O-number rewrite         │    └───────────────┘    Star SR-32 Swiss
-                validators  │ subprogram dependencies  │                         Mazak Integrex 100-IV ST
-                            └──────────────────────────┘                         Brother Speedio mills
-                                                                                        │
-                                              ladder99 ◄── MTConnect ◄──────────────────┘
-                                                 └──► Grafana
+Programs start in CAM: Fusion for milling and mill-turn, PartMaker/SwissCAM
+for the Swiss lathes. The posted G-code lands in grace-cam, the shop's source
+of truth. It keeps one folder per part under
+`parts/{turning,milling,swiss}/{machine}/{customer}/`, holding the program, a
+`recipe.json`, the setup sheet and notes, beside the per-machine post
+processors and the validators that run before anything touches iron. A proven
+program enters the tree copied byte for byte from the CNC backup, named for
+the O-number it declares and hashed, and only then gets a recipe.
 
- tooling data + ERP
- ──────────────────
- Fusion tool library ──► datum ──► Supabase (enriched record) ──► Plex supply-items (identity slice)
- Plex Connect REST   ◄── plex_mcp (MCP server, ~500 endpoints, read-only unless you say otherwise)
- G:\CNC Backup       ──► toollib (every tool call in every program → SQLite → browser)
- vendor catalog PDFs ──► catalog-chunking (RAG packs for exact part-number lookup)
-```
+tapeworm takes it from there. It holds the versioned program library in
+Supabase, assigns each program its machine-specific O-number, resolves
+subprogram dependencies, and streams the result to the control over RS-232, a
+network share or a USB gadget. On the other end are Tsugami M08SY mill-turns,
+Citizen L20 and K16 and Star SR-32 Swiss lathes, a Mazak Integrex 100-IV ST,
+and Brother Speedio mills. Machine state comes back out through the ladder99
+fork: MTConnect adapters feeding Grafana.
 
-Programs flow left to right. Proven programs are copied byte for byte from the
-CNC backup into grace-cam, named for the O-number they declare, hashed, and
-only then do they get a recipe. tapeworm is where a program picks up its
-machine-specific O-number and goes down the wire. Nothing in the top row talks
-to Plex; the ERP has its own lane.
+The ERP has its own lane, and nothing in the program path talks to it. Fusion's
+tool library syncs nightly through datum into Supabase, with only the identity
+slice pushed on to Plex. Plex itself is reached through plex_mcp, an MCP server
+over its REST surface that is read-only unless you say otherwise. toollib
+indexes every tool call in every program on the backup share into SQLite, and
+catalog-chunking turns vendor catalog PDFs into prompt packs for exact
+part-number lookup.
 
 ## Repos
 
