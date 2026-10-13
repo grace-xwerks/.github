@@ -132,7 +132,6 @@ shop-floor work above took priority.
 - **No silent post changes.** Every edit to a post processor gets a line in that post's `CHANGELOG.md` in the same commit.
 - **Writes to the ERP are opt-in twice.** An environment flag and an explicit confirm on the call. Reads are free.
 - **Branch, PR, squash-merge.** Most work happens in Claude Code sessions and git worktrees; the workspace repo's `/overlord` skill keeps session, branch, worktree and PR lined up.
-- **Export-controlled data never reaches GitHub**, public or private. It stays on the machine it was made on.
 
 ## Start here
 
